@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import NotFound from "./NotFound";
-import AllDecks from "./AllDecks";
+import AllDecks from "../decks/AllDecks";
 
 function Layout() {
   return (
