@@ -5,6 +5,7 @@ import Card from "../cards/Card";
 function StudyDeck({ deckId }) {
   const [reading, setReading] = useState({});
   const [cardNum, setCardNum] = useState(0);
+  const [deckLength, setDeckLength] = useState(null);
 
   useEffect(() => {
     async function loadDeck() {
@@ -15,7 +16,13 @@ function StudyDeck({ deckId }) {
     loadDeck();
   }, []);
 
-  console.log(reading);
+  useEffect(() => {
+    if (reading.cards) {
+      setDeckLength(reading.cards.length);
+    }
+  }, [reading]);
+
+  console.log(deckLength);
 
   const nextCard = () => {
     setCardNum(+1);
@@ -34,7 +41,7 @@ function StudyDeck({ deckId }) {
   };
 
   const deckTitle = reading.name;
-  const deckLength = 2;
+  // const deckLength = 4;
 
   if (deckLength < 3) {
     return (

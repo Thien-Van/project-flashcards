@@ -2,13 +2,12 @@ import React from "react";
 
 function Card({ reading, nextCard }) {
   // const card
-
   const handleFlip = () => {};
 
   return (
     <>
       <div className="card m-2 p-2">
-        <h3>Card number</h3>
+        <h3>Card number from </h3>
         <p>question</p>
         <button className="btn btn-secondary" onClick={handleFlip}>
           Flip
