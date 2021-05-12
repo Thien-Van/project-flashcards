@@ -2,12 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useParams } from "react-router-dom";
 import StudyDeck from "./StudyDeck";
 import CreateDeck from "../decks/CreateDeck";
-import { readDeck } from "../utils/api";
+import { readDeck, listCards } from "../utils/api";
 
 function Deck() {
   const { deckId } = useParams();
   const { url } = useRouteMatch();
   const [reading, setReading] = useState({});
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    async function loadCards() {
+      const response = await listCards(deckId);
+      setCards(response);
+    }
+    loadCards();
+  }, []);
 
   useEffect(() => {
     async function loadDeck() {
@@ -25,8 +34,8 @@ function Deck() {
   // const cardOverview = deckCards.map((card) => {
   //   return (
   //     <div className="card">
-  //       <p>{card.question}</p>
-  //       <p>{card.answer}</p>
+  //       <p>{card.front}</p>
+  //       <p>{card.back}</p>
   //     </div>
   //   );
   // });
@@ -60,7 +69,7 @@ function Deck() {
       </nav>
       <Switch>
         <Route path={`${url}/study`}>
-          <StudyDeck deckId={deckId} />
+          <StudyDeck reading={reading} cards={cards} />
         </Route>
         <Route path="/decks/new">
           <CreateDeck />

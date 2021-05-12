@@ -6,7 +6,7 @@ function DeckOverview({ deck }) {
 
   useEffect(() => {
     async function loadCards() {
-      const response = await listCards();
+      const response = await listCards(deck.id);
       setCards(response);
     }
     loadCards();

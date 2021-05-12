@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { readDeck } from "../utils/api";
-import Card from "../cards/Card";
+import StudyCard from "../cards/StudyCard";
 
-function StudyDeck({ deckId }) {
-  const [reading, setReading] = useState({});
+function StudyDeck({ reading, cards }) {
   const [cardNum, setCardNum] = useState(0);
-  const [deckLength, setDeckLength] = useState(null);
+  // const [currentCard, setCurrentCard] = useState(0);
+  const deckTitle = reading.name;
+  const deckLength = cards.length;
 
-  useEffect(() => {
-    async function loadDeck() {
-      const response = await readDeck(deckId);
-      setReading(response);
-    }
-
-    loadDeck();
-  }, []);
-
-  useEffect(() => {
-    if (reading.cards) {
-      setDeckLength(reading.cards.length);
-    }
-  }, [reading]);
-
-  console.log(deckLength);
+  console.log(reading);
 
   const nextCard = () => {
     setCardNum(+1);
     if (cardNum === deckLength - 1) {
-      console.log("restart");
       const restart = window.confirm(
         "Restart Cards? Click 'cancel' to return to home page"
       );
@@ -40,10 +24,17 @@ function StudyDeck({ deckId }) {
     }
   };
 
-  const deckTitle = reading.name;
+  const currentCard = cards[cardNum];
+  // useEffect(() => {
+  //   if (cards) {
+  //     setCurrentCard(cards[cardNum]);
+  //   }
+  // }, []);
+
   // const deckLength = 4;
 
-  if (deckLength < 3) {
+  // debug to 1 change to 3 later
+  if (deckLength < 1) {
     return (
       <>
         <h1>Study: {deckTitle}</h1>
@@ -60,7 +51,7 @@ function StudyDeck({ deckId }) {
   return (
     <>
       <h1>Study: {deckTitle}</h1>
-      <Card reading={reading} nextCard={nextCard} />
+      <StudyCard currentCard={currentCard} nextCard={nextCard} />
     </>
   );
 }

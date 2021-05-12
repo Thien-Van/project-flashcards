@@ -1,14 +1,19 @@
 import React from "react";
 
-function Card({ reading, nextCard }) {
+function StudyCard({ currentCard, nextCard }) {
   // const card
-  const handleFlip = () => {};
+
+  let content = currentCard.front;
+  const handleFlip = (event) => {
+    event.preventDefaut();
+    content = currentCard.back;
+  };
 
   return (
     <>
       <div className="card m-2 p-2">
         <h3>Card number from </h3>
-        <p>question</p>
+        <p>{content}</p>
         <button className="btn btn-secondary" onClick={handleFlip}>
           Flip
         </button>
@@ -20,4 +25,4 @@ function Card({ reading, nextCard }) {
   );
 }
 
-export default Card;
+export default StudyCard;
