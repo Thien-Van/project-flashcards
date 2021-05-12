@@ -3,7 +3,7 @@ import StudyCard from "../cards/StudyCard";
 
 function StudyDeck({ reading, cards }) {
   const [cardNum, setCardNum] = useState(0);
-  // const [currentCard, setCurrentCard] = useState(0);
+  const [currentCard, setCurrentCard] = useState(cards[0]);
   const deckTitle = reading.name;
   const deckLength = cards.length;
 
@@ -11,6 +11,7 @@ function StudyDeck({ reading, cards }) {
 
   const nextCard = () => {
     setCardNum(+1);
+    setCurrentCard(cards[cardNum]);
     if (cardNum === deckLength - 1) {
       const restart = window.confirm(
         "Restart Cards? Click 'cancel' to return to home page"
@@ -24,7 +25,6 @@ function StudyDeck({ reading, cards }) {
     }
   };
 
-  const currentCard = cards[cardNum];
   // useEffect(() => {
   //   if (cards) {
   //     setCurrentCard(cards[cardNum]);

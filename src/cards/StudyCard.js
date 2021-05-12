@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 function StudyCard({ currentCard, nextCard }) {
   // const card
-
-  let content = currentCard.front;
-  const handleFlip = (event) => {
-    event.preventDefaut();
-    content = currentCard.back;
+  const front = currentCard.front;
+  const back = currentCard.back;
+  const [content, setContent] = useState(front);
+  const [visibility, setVisibility] = useState("invisible");
+  const handleFlip = () => {
+    setContent(back);
+    setVisibility("visible");
   };
 
   return (
@@ -17,7 +19,7 @@ function StudyCard({ currentCard, nextCard }) {
         <button className="btn btn-secondary" onClick={handleFlip}>
           Flip
         </button>
-        <button className="btn btn-primary" onClick={nextCard}>
+        <button className={`${visibility} btn btn-primary`} onClick={nextCard}>
           Next
         </button>
       </div>
