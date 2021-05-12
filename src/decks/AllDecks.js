@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { listDecks } from "../utils/api";
-import DeckCard from "./DeckCard.js";
+import DeckOverview from "./DeckOverview.js";
 
 function AllDecks() {
   // const listDecks = listDecks();
@@ -15,7 +15,6 @@ function AllDecks() {
     }
     loadDecks();
   }, []);
-  console.log(decks);
 
   // if (listDecks.length === 0) {
   //   return (
@@ -25,13 +24,15 @@ function AllDecks() {
   //   );
   // }
 
-  const deckCards = decks.map((deck) => <DeckCard deck={deck} />);
+  const deckCards = decks.map((deck) => (
+    <DeckOverview deck={deck} key={deck.id} />
+  ));
 
   return (
     <>
-      <button className="btn btn-secondary" type="button">
+      <a className="btn btn-secondary" href="decks/new">
         + Create Deck
-      </button>
+      </a>
       <div>{deckCards}</div>
     </>
   );
