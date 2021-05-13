@@ -4,6 +4,7 @@ import NotFound from "./NotFound";
 import AllDecks from "../decks/AllDecks";
 import Deck from "../decks/Deck";
 import { Route, Switch } from "react-router";
+import CreateDeck from "../decks/CreateDeck";
 
 function Layout() {
   return (
@@ -17,6 +18,9 @@ function Layout() {
           </Route>
           <Route path="/decks/:deckId">
             <Deck />
+          </Route>
+          <Route path="/decks/new">
+            <CreateDeck />
           </Route>
           <Route>
             <NotFound />

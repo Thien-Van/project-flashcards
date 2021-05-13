@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useParams } from "react-router-dom";
 import StudyDeck from "./StudyDeck";
-import CreateDeck from "../decks/CreateDeck";
 import { readDeck, listCards } from "../utils/api";
 
 function Deck() {
@@ -71,9 +70,7 @@ function Deck() {
         <Route path={`${url}/study`}>
           <StudyDeck reading={reading} cards={cards} />
         </Route>
-        <Route path="/decks/new">
-          <CreateDeck />
-        </Route>
+
         <Route>
           <DeckScreen />
         </Route>

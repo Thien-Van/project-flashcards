@@ -30,7 +30,7 @@ function AllDecks() {
 
   return (
     <>
-      <a className="btn btn-secondary" href="decks/new">
+      <a className="btn btn-secondary" href="/decks/new">
         + Create Deck
       </a>
       <div>{deckCards}</div>
