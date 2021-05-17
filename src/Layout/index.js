@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "./Header";
 import NotFound from "./NotFound";
+import Home from "../view/Home";
+import CreateDeck from "../edit/CreateDeck";
 
 import { Route, Switch } from "react-router";
 
@@ -13,6 +15,9 @@ function Layout() {
         <Switch>
           <Route exact={true} path="/">
             <Home />
+          </Route>
+          <Route path="/decks/new">
+            <CreateDeck />
           </Route>
           <Route>
             <NotFound />
