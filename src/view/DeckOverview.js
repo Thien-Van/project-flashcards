@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { deleteDeck } from "../utils/api";
 
-function DeckOverview({ cardNum, title, description, id, deleteDeck }) {
+function DeckOverview({ cardNum, title, description, id }) {
+  const handleDelete = () => {
+    const confirm = window.confirm(
+      "Delete this deck? You will not be able to recover it"
+    );
+    if (confirm) {
+      deleteDeck(id);
+      window.open("/", "Home");
+    }
+  };
+
   return (
     <div className="card m-2">
       <div className="row m-1">
@@ -29,7 +40,7 @@ function DeckOverview({ cardNum, title, description, id, deleteDeck }) {
           </Link>
         </div>
         <div className="col-sm-2">
-          <button className="btn btn-danger m-1" onClick={deleteDeck}>
+          <button className="btn btn-danger m-1" onClick={handleDelete}>
             Delete
           </button>
         </div>

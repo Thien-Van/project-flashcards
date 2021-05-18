@@ -1,11 +1,46 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { createDeck } from "../utils/api";
 
 function CreateDeck() {
-  const handleSubmit = () => {
-    console.log("creating");
+  const history = useHistory();
+  const [newDeck, setNewDeck] = useState({});
+  const [deckName, setDeckName] = useState("");
+  const [deckDescription, setDeckDescription] = useState("");
+  const handleNameChange = (event) => setDeckName(event.target.value);
+  const handleDescriptionChange = (event) =>
+    setDeckDescription(event.target.value);
+
+  useEffect(() => {
+    if (Object.keys(newDeck).length > 0) {
+      const abortController = new AbortController();
+      let signal = null;
+      async function loadNewDeck() {
+        try {
+          signal = abortController.signal;
+          const response = await createDeck(newDeck, signal);
+          history.push(`/decks/${response.id}`);
+        } catch (error) {
+          if (error.name === "AbortError") {
+            console.log("Aborted");
+          } else {
+            throw error;
+          }
+        }
+      }
+      loadNewDeck();
+      return () => abortController.abort;
+    }
+  }, [newDeck]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setNewDeck({
+      name: deckName,
+      description: deckDescription,
+    });
   };
+
   return (
     <div>
       <h1>Create Deck</h1>
@@ -19,6 +54,8 @@ function CreateDeck() {
           className="form-control"
           id="deckName"
           placeholder="Deck Name"
+          onChange={handleNameChange}
+          value={deckName}
         ></input>
         <div className="form-group">
           <label htmlFor="deckDescription" className="mt-3">
@@ -29,6 +66,8 @@ function CreateDeck() {
             id="deckDescription"
             rows="3"
             placeholder="Brief description of the deck."
+            onChange={handleDescriptionChange}
+            value={deckDescription}
           ></textarea>
         </div>
         <div className="mt-2">

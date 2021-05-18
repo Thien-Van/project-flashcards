@@ -12,18 +12,43 @@ import StudyDeck from "../study/StudyDeck";
 import AddCard from "../edit/AddCard";
 import CardOverview from "./CardOverview";
 import EditCard from "../edit/EditCard";
+import { readDeck } from "../utils/api";
 
 function Deck() {
   const { url } = useRouteMatch();
   const { deckId } = useParams();
 
   const [cards, setCards] = useState([]);
+  const [deck, setDeck] = useState({});
+
   // const cards = [
   //   { id: "1", front: "Front 1", back: "Back 1" },
   //   { id: "2", front: "Front 2", back: "Back 2" },
   //   { id: "3", front: "Front 3", back: "Back 3" },
   //   { id: "4", front: "Front 4", back: "Back 4" },
   // ];
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    let signal = null;
+    loadDeck();
+    async function loadDeck() {
+      try {
+        signal = abortController.signal;
+        const response = await readDeck(deckId, signal);
+        setDeck(response);
+        setCards(response.cards);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Aborted");
+        } else {
+          throw error;
+        }
+      }
+    }
+    loadDeck();
+    return () => abortController.abort;
+  }, [deckId]);
 
   const deleteDeck = () => {
     console.log("delete Deck");
@@ -47,8 +72,8 @@ function Deck() {
     return (
       <div>
         <div>
-          <h3>Deck View {deckId}</h3>
-          <p>viewing deck right now</p>
+          <h3>{deck.name}</h3>
+          <p>{deck.description}</p>
           <Link className="btn btn-secondary m-1" to={`/decks/${deckId}/edit`}>
             Edit
           </Link>
@@ -76,7 +101,7 @@ function Deck() {
   return (
     <Switch>
       <Route path={`${url}/study`}>
-        <StudyDeck deckId={deckId} />
+        <StudyDeck deck={deck} />
       </Route>
       <Route path={`${url}/edit`}>
         <EditDeck />

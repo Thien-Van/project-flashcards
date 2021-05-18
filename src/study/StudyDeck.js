@@ -1,60 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { readDeck } from "../utils/api";
 import StudyCard from "../study/StudyCard";
 
-function StudyDeck({ deckId }) {
-  const [deck, setDeck] = useState({});
+function StudyDeck({ deck }) {
+  console.log(deck);
+  const [cards, setCards] = useState([]);
   const [cardNum, setCardNum] = useState(0);
   const [content, setContent] = useState("");
-  const [cards, setCards] = useState([]);
   const [hidden, setHidden] = useState(true);
-  //   let cards = [];
-  useEffect(() => {
-    const abortController = new AbortController();
-    let signal = null;
-    loadDeck();
-    async function loadDeck() {
-      try {
-        signal = abortController.signal;
-        const response = await readDeck(deckId, signal);
-        setDeck(response);
-        setCards(response.cards);
-        setContent(response.cards[0].front);
-      } catch (error) {
-        if (error.name === "AbortError") {
-          console.log("Aborted");
-        } else {
-          throw error;
-        }
-      }
-    }
-    loadDeck();
-    return () => abortController.abort;
-  }, []);
 
-  //   cards = deck.cards;
-  console.log(cards);
+  useEffect(() => {
+    if (Object.keys(deck).length > 0) {
+      setCards(deck.cards);
+      setContent(deck.cards[0].front);
+      setCardNum(0);
+    }
+  }, [deck]);
 
   const flipCard = () => {
     setContent(cards[cardNum].back);
     setHidden(false);
-    console.log("flip" + cardNum);
   };
 
   const nextCard = () => {
-    console.log("length" + cards.length - 1);
-    if (cardNum === cards.length) {
-      console.log("last");
-      setCardNum(0);
-      setContent(cards[cardNum].front);
-      setHidden(true);
+    if (cardNum === cards.length - 1) {
+      const restart = window.confirm(
+        "Restart Cards? Click 'cancel' to return to home page"
+      );
+      if (restart) {
+        setCardNum(0);
+      } else {
+        window.open("/", "Home");
+      }
     } else {
       setCardNum((currentNumber) => currentNumber + 1);
-      console.log(cardNum);
+    }
+  };
+  useEffect(() => {
+    if (cards.length > 0) {
       setContent(cards[cardNum].front);
       setHidden(true);
     }
-  };
+  }, [cardNum]);
 
   return (
     <div>

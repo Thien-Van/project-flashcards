@@ -26,37 +26,6 @@ function Home() {
     return () => abortController.abort;
   }, []);
 
-  // const decks = [
-  //   {
-  //     cards: [1, 2, 3, 4],
-  //     title: "Title 1",
-  //     description: "Description 1",
-  //     id: "1",
-  //   },
-  //   {
-  //     cards: [1, 2, 3],
-  //     title: "Title 2",
-  //     description: "Description 2",
-  //     id: "2",
-  //   },
-  //   {
-  //     cards: [1, 2, 3, 4, 5],
-  //     title: "Title 3",
-  //     description: "Description 3",
-  //     id: "3",
-  //   },
-  //   {
-  //     cards: [1, 2],
-  //     title: "Title 4",
-  //     description: "Description 4",
-  //     id: "4",
-  //   },
-  // ];
-
-  const deleteDeck = () => {
-    console.log("delete Deck");
-  };
-
   const deckList = decks.map((deck) => (
     <DeckOverview
       cardNum={deck.cards.length}
@@ -64,7 +33,6 @@ function Home() {
       description={deck.description}
       id={deck.id}
       key={deck.id}
-      deleteDeck={deleteDeck}
     />
   ));
 
