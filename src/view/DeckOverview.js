@@ -1,25 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function DeckOverview({ cardNum, title, description, id, deleteDeck }) {
   return (
     <div className="card m-2">
-      <div className="card-header">
-        <p>
-          <small>{cardNum} cards</small>
-        </p>
+      <div className="row m-1">
+        <div className="col-sm-10">
+          <h3>{title}</h3>
+        </div>
+        <div className="col-sm-2">
+          <p className="text-right">
+            <small>{cardNum} cards</small>
+          </p>
+        </div>
       </div>
-      <div className="card-body">
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <a className="btn btn-secondary" href={`/decks/${id}`}>
-          View
-        </a>
-        <a className="btn btn-primary" href={`/decks/${id}/study`}>
-          Study
-        </a>
-        <button className="btn btn-danger" onClick={deleteDeck}>
-          Delete
-        </button>
+      <div className="row m-1">
+        <div className="col-sm">
+          <p>{description}</p>
+        </div>
+      </div>
+      <div className="row m-1">
+        <div className="col-sm-10">
+          <Link className="btn btn-secondary m-1" to={`/decks/${id}`}>
+            View
+          </Link>
+          <Link className="btn btn-primary m-1" to={`/decks/${id}/study`}>
+            Study
+          </Link>
+        </div>
+        <div className="col-sm-2">
+          <button className="btn btn-danger m-1" onClick={deleteDeck}>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
