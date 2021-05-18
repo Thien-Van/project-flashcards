@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import StudyCard from "../study/StudyCard";
 
 function StudyDeck({ deck }) {
-  console.log(deck);
   const [cards, setCards] = useState([]);
   const [cardNum, setCardNum] = useState(0);
   const [content, setContent] = useState("");
@@ -44,6 +44,19 @@ function StudyDeck({ deck }) {
 
   return (
     <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <Link to="/">Home</Link>
+          </li>
+          <li class="breadcrumb-item">
+            <Link to={`/decks/${deck.id}`}>{deck.name}</Link>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Study
+          </li>
+        </ol>
+      </nav>
       <div className="row">
         <h1>{deck.name}</h1>
       </div>

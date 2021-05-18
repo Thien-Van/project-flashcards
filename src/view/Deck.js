@@ -21,13 +21,6 @@ function Deck() {
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({});
 
-  // const cards = [
-  //   { id: "1", front: "Front 1", back: "Back 1" },
-  //   { id: "2", front: "Front 2", back: "Back 2" },
-  //   { id: "3", front: "Front 3", back: "Back 3" },
-  //   { id: "4", front: "Front 4", back: "Back 4" },
-  // ];
-
   useEffect(() => {
     const abortController = new AbortController();
     let signal = null;
@@ -48,19 +41,14 @@ function Deck() {
     }
     loadDeck();
     return () => abortController.abort;
-  }, [deckId]);
+  }, []);
 
   const deleteDeck = () => {
     console.log("delete Deck");
   };
 
-  const deleteCard = () => {
-    console.log("delete Card");
-  };
-
   const cardList = cards.map((card) => (
     <CardOverview
-      deleteDeck={deleteCard}
       key={card.id}
       front={card.front}
       back={card.back}
@@ -71,6 +59,16 @@ function Deck() {
   function DeckDisplay() {
     return (
       <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <Link href="/">Home</Link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {deck.name}
+            </li>
+          </ol>
+        </nav>
         <div>
           <h3>{deck.name}</h3>
           <p>{deck.description}</p>
