@@ -1,25 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { readCard, updateCard } from "../utils/api";
 
 function EditCard({ deckId }) {
+  const history = useHistory();
+  const [updatedCard, setUpdatedCard] = useState({});
+  const [cardFront, setCardFront] = useState("");
+  const [cardBack, setCardBack] = useState("");
+  const handleFrontChange = (event) => setCardFront(event.target.value);
+  const handleBackChange = (event) => setCardBack(event.target.value);
+
+  useEffect(() => {
+    if (Object.keys(updatedCard).length > 0) {
+      const abortController = new AbortController();
+      let signal = null;
+      async function loadNewCard() {
+        try {
+          signal = abortController.signal;
+          const response = await updateCard(deckId, updatedCard, signal);
+          history.push(`/decks/${deckId}`);
+        } catch (error) {
+          if (error.name === "AbortError") {
+            console.log("Aborted");
+          } else {
+            throw error;
+          }
+        }
+      }
+      loadNewCard();
+      return () => abortController.abort;
+    }
+  }, [updatedCard]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setUpdatedCard({
+      front: cardFront,
+      back: cardBack,
+    });
+  };
+
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li class="breadcrumb-item">
+          <li className="breadcrumb-item">
             <Link to={`#`}>Deck</Link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li className="breadcrumb-item active" aria-current="page">
             Edit Card X
           </li>
         </ol>
       </nav>
       <div>
         <h1>Edit Card</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="cardFront" className="mt-3">
               Front
@@ -29,6 +67,8 @@ function EditCard({ deckId }) {
               id="cardFront"
               rows="3"
               placeholder="Front side of card."
+              onChange={handleFrontChange}
+              value={cardFront}
             ></textarea>
           </div>
           <div className="form-group">
@@ -40,6 +80,8 @@ function EditCard({ deckId }) {
               id="cardBack"
               rows="3"
               placeholder="Back side of card."
+              onChange={handleBackChange}
+              value={cardBack}
             ></textarea>
           </div>
           <div className="mt-2">
