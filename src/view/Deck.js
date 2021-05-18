@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Switch,
   Route,
@@ -17,12 +17,13 @@ function Deck() {
   const { url } = useRouteMatch();
   const { deckId } = useParams();
 
-  const cards = [
-    { id: "1", front: "Front 1", back: "Back 1" },
-    { id: "2", front: "Front 2", back: "Back 2" },
-    { id: "3", front: "Front 3", back: "Back 3" },
-    { id: "4", front: "Front 4", back: "Back 4" },
-  ];
+  const [cards, setCards] = useState([]);
+  // const cards = [
+  //   { id: "1", front: "Front 1", back: "Back 1" },
+  //   { id: "2", front: "Front 2", back: "Back 2" },
+  //   { id: "3", front: "Front 3", back: "Back 3" },
+  //   { id: "4", front: "Front 4", back: "Back 4" },
+  // ];
 
   const deleteDeck = () => {
     console.log("delete Deck");
@@ -75,7 +76,7 @@ function Deck() {
   return (
     <Switch>
       <Route path={`${url}/study`}>
-        <StudyDeck />
+        <StudyDeck deckId={deckId} />
       </Route>
       <Route path={`${url}/edit`}>
         <EditDeck />

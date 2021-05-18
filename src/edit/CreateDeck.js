@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { createDeck } from "../utils/api";
 
 function CreateDeck() {
+  const handleSubmit = () => {
+    console.log("creating");
+  };
   return (
     <div>
       <h1>Create Deck</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group"></div>
         <label htmlFor="deckName" className="mt-3">
           Name
