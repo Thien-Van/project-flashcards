@@ -1,10 +1,11 @@
 import React from "react";
+import { Route, Switch } from "react-router";
+
 import Header from "./Header";
 import NotFound from "./NotFound";
 import Home from "../view/Home";
 import CreateDeck from "../edit/CreateDeck";
-
-import { Route, Switch } from "react-router";
+import Deck from "../view/Deck";
 
 function Layout() {
   return (
@@ -18,6 +19,9 @@ function Layout() {
           </Route>
           <Route path="/decks/new">
             <CreateDeck />
+          </Route>
+          <Route path="/decks/:deckId">
+            <Deck />
           </Route>
           <Route>
             <NotFound />

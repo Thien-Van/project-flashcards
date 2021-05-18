@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route } from "react-router";
+
 import { listDecks } from "../utils/api";
 import DeckOverview from "./DeckOverview";
 import CreateDeck from "../edit/CreateDeck";
-import Deck from "./Deck";
 
 function Home() {
   // const [decks, setDecks] = useState();
@@ -67,20 +66,10 @@ function Home() {
 
   return (
     <div>
-      <Switch>
-        <Route exact={true} path="/">
-          <a className="btn btn-secondary" href="/decks/new">
-            Create Deck
-          </a>
-          <div>{deckList}</div>
-        </Route>
-        <Route path="/decks/new">
-          <CreateDeck />
-        </Route>
-        <Route path="/decks/:id">
-          <Deck />
-        </Route>
-      </Switch>
+      <a className="btn btn-secondary" href="/decks/new">
+        Create Deck
+      </a>
+      <div>{deckList}</div>
     </div>
   );
 }
