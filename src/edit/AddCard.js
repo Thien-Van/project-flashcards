@@ -17,7 +17,7 @@ function AddCard({ deckId }) {
       async function loadNewCard() {
         try {
           signal = abortController.signal;
-          const response = await createCard(deckId, newCard, signal);
+          await createCard(deckId, newCard, signal);
           history.push(`/decks/${deckId}`);
         } catch (error) {
           if (error.name === "AbortError") {

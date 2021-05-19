@@ -11,6 +11,7 @@ function EditDeck({ deck }) {
   const handleDescriptionChange = (event) =>
     setDeckDescription(event.target.value);
 
+  console.log("received Deck");
   useEffect(() => {
     if (Object.keys(updatedDeck).length > 0) {
       const abortController = new AbortController();

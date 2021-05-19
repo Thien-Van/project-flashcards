@@ -6,6 +6,7 @@ import {
   Link,
   useRouteMatch,
   useLocation,
+  useHistory,
 } from "react-router-dom";
 
 import EditDeck from "../edit/EditDeck";
@@ -13,18 +14,20 @@ import StudyDeck from "../study/StudyDeck";
 import AddCard from "../edit/AddCard";
 import CardOverview from "./CardOverview";
 import EditCard from "../edit/EditCard";
-import { readDeck } from "../utils/api";
+import { readDeck, readCard } from "../utils/api";
 
 function Deck() {
   let location = useLocation();
+  const history = useHistory();
   const { url } = useRouteMatch();
   const { deckId } = useParams();
 
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({});
+  const [cardId, setCardId] = useState(null);
+  const [card, setCard] = useState({});
 
   useEffect(() => {
-    console.log("calling");
     const abortController = new AbortController();
     let signal = null;
     loadDeck();
@@ -46,12 +49,42 @@ function Deck() {
     return () => abortController.abort;
   }, [location]);
 
+  useEffect(() => {
+    if (cardId != null) {
+      const abortController = new AbortController();
+      let signal = null;
+      loadCard();
+      async function loadCard() {
+        try {
+          signal = abortController.signal;
+          const response = await readCard(cardId, signal);
+          setCard(response);
+        } catch (error) {
+          if (error.name === "AbortError") {
+            console.log("Aborted");
+          } else {
+            throw error;
+          }
+        }
+      }
+      loadCard();
+      return () => abortController.abort;
+    }
+  }, [cardId]);
+
   const deleteDeck = () => {
     console.log("delete Deck");
   };
 
+  const editCard = (id) => {
+    console.log("idchange");
+    setCardId(id);
+    history.push(`${url}/cards/${id}/edit`);
+  };
+
   const cardList = cards.map((card) => (
     <CardOverview
+      editCard={editCard}
       key={card.id}
       front={card.front}
       back={card.back}
@@ -111,7 +144,7 @@ function Deck() {
         <AddCard deckId={deckId} />
       </Route>
       <Route path={`${url}/cards/:cardId/edit`}>
-        <EditCard deckId={deckId} />
+        <EditCard currentCard={card} deck={deckId} />
       </Route>
       <Route>
         <DeckDisplay />

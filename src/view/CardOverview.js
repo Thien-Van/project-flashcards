@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { deleteCard } from "../utils/api";
 
-function CardOverview({ front, back, id }) {
+function CardOverview({ front, back, id, editCard }) {
   const { url } = useRouteMatch;
   const handleDelete = () => {
     const confirm = window.confirm(
@@ -12,6 +12,11 @@ function CardOverview({ front, back, id }) {
       deleteCard(id);
       window.open(`${url}`, "Deck");
     }
+  };
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    editCard(id);
   };
 
   return (
@@ -25,9 +30,9 @@ function CardOverview({ front, back, id }) {
         </div>
       </div>
       <div className="mt-1">
-        <Link className="btn btn-secondary m-1" to={`${url}/cards/${id}/edit`}>
+        <button className="btn btn-secondary m-1" onClick={handleEdit}>
           Edit
-        </Link>
+        </button>
         <button className="btn btn-danger m-1" onClick={handleDelete}>
           Delete
         </button>
