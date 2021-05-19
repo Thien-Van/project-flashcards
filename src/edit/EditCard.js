@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { readCard, updateCard } from "../utils/api";
 
 function EditCard({ deckId }) {
@@ -66,7 +66,6 @@ function EditCard({ deckId }) {
               className="form-control"
               id="cardFront"
               rows="3"
-              placeholder="Front side of card."
               onChange={handleFrontChange}
               value={cardFront}
             ></textarea>
@@ -79,7 +78,6 @@ function EditCard({ deckId }) {
               className="form-control"
               id="cardBack"
               rows="3"
-              placeholder="Back side of card."
               onChange={handleBackChange}
               value={cardBack}
             ></textarea>

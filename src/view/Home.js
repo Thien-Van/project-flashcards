@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { listDecks } from "../utils/api";
 import DeckOverview from "./DeckOverview";
 
 function Home() {
+  let location = useLocation();
   const [decks, setDecks] = useState([]);
   useEffect(() => {
+    console.log("homechange");
     const abortController = new AbortController();
     let signal = null;
     loadDecks();
@@ -24,7 +27,7 @@ function Home() {
     }
     loadDecks();
     return () => abortController.abort;
-  }, []);
+  }, [location]);
 
   const deckList = decks.map((deck) => (
     <DeckOverview

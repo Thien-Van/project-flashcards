@@ -4,7 +4,6 @@ import { deleteCard } from "../utils/api";
 
 function CardOverview({ front, back, id }) {
   const { url } = useRouteMatch;
-  console.log(url);
   const handleDelete = () => {
     const confirm = window.confirm(
       "Delete this card? You will not be able to recover it"

@@ -4,9 +4,9 @@ import { updateDeck } from "../utils/api";
 
 function EditDeck({ deck }) {
   const history = useHistory();
-  const [updatedDeck, setUpdatedDeck] = useState(deck);
-  const [deckName, setDeckName] = useState(deck.name);
-  const [deckDescription, setDeckDescription] = useState(deck.description);
+  const [updatedDeck, setUpdatedDeck] = useState({});
+  const [deckName, setDeckName] = useState("");
+  const [deckDescription, setDeckDescription] = useState("");
   const handleNameChange = (event) => setDeckName(event.target.value);
   const handleDescriptionChange = (event) =>
     setDeckDescription(event.target.value);
@@ -15,11 +15,11 @@ function EditDeck({ deck }) {
     if (Object.keys(updatedDeck).length > 0) {
       const abortController = new AbortController();
       let signal = null;
-      async function loadNewDeck() {
+      async function saveDeck() {
         try {
           signal = abortController.signal;
-          const response = await updateDeck(updatedDeck, signal);
-          history.push(`/decks/${response.id}`);
+          await updateDeck(updatedDeck, signal);
+          history.push(`/decks/${deck.id}`);
         } catch (error) {
           if (error.name === "AbortError") {
             console.log("Aborted");
@@ -28,16 +28,24 @@ function EditDeck({ deck }) {
           }
         }
       }
-      loadNewDeck();
+      saveDeck();
       return () => abortController.abort;
     }
-  }, [newDeck]);
+  }, [updatedDeck]);
+
+  useEffect(() => {
+    if (Object.keys(deck).length > 0) {
+      setDeckName(deck.name);
+      setDeckDescription(deck.description);
+    }
+  }, [deck]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setUpdatedDeck({
       name: deckName,
       description: deckDescription,
+      id: deck.id,
     });
   };
 
@@ -48,7 +56,7 @@ function EditDeck({ deck }) {
           <li className="breadcrumb-item">
             <Link to="/">Home</Link>
           </li>
-          <li class="breadcrumb-item">
+          <li className="breadcrumb-item">
             <Link to={`#`}>Deck</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
@@ -67,7 +75,6 @@ function EditDeck({ deck }) {
             type="deckName"
             className="form-control"
             id="deckName"
-            placeholder="Deck Name"
             onChange={handleNameChange}
             value={deckName}
           ></input>
@@ -79,7 +86,6 @@ function EditDeck({ deck }) {
               className="form-control"
               id="deckDescription"
               rows="3"
-              placeholder="Brief description of the deck."
               onChange={handleDescriptionChange}
               value={deckDescription}
             ></textarea>

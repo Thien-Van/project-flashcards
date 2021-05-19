@@ -7,7 +7,7 @@
     },
     {
       "name": "New Deck to test",
-      "description": "Testing Testing 123",
+      "description": "Testing Testing 1234",
       "id": 3
     }
   ],
@@ -39,12 +39,6 @@
       "back": "You.",
       "deckId": 3,
       "id": 8
-    },
-    {
-      "front": "When is good",
-      "back": "now",
-      "deckId": 3,
-      "id": 9
     }
   ]
 }

@@ -5,6 +5,7 @@ import {
   useParams,
   Link,
   useRouteMatch,
+  useLocation,
 } from "react-router-dom";
 
 import EditDeck from "../edit/EditDeck";
@@ -15,6 +16,7 @@ import EditCard from "../edit/EditCard";
 import { readDeck } from "../utils/api";
 
 function Deck() {
+  let location = useLocation();
   const { url } = useRouteMatch();
   const { deckId } = useParams();
 
@@ -22,6 +24,7 @@ function Deck() {
   const [deck, setDeck] = useState({});
 
   useEffect(() => {
+    console.log("calling");
     const abortController = new AbortController();
     let signal = null;
     loadDeck();
@@ -41,7 +44,7 @@ function Deck() {
     }
     loadDeck();
     return () => abortController.abort;
-  }, []);
+  }, [location]);
 
   const deleteDeck = () => {
     console.log("delete Deck");
@@ -110,7 +113,7 @@ function Deck() {
       <Route path={`${url}/cards/:cardId/edit`}>
         <EditCard deckId={deckId} />
       </Route>
-      <Route path={`${url}`}>
+      <Route>
         <DeckDisplay />
       </Route>
     </Switch>
