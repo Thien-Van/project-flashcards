@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import { deleteCard } from "../utils/api";
 
 function CardOverview({ front, back, id, editCard }) {

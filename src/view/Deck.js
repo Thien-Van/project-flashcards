@@ -21,11 +21,10 @@ function Deck() {
   const history = useHistory();
   const { url } = useRouteMatch();
   const { deckId } = useParams();
+  console.log(deckId);
 
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({});
-  const [cardId, setCardId] = useState(null);
-  const [card, setCard] = useState({});
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -49,36 +48,11 @@ function Deck() {
     return () => abortController.abort;
   }, [location]);
 
-  useEffect(() => {
-    if (cardId != null) {
-      const abortController = new AbortController();
-      let signal = null;
-      loadCard();
-      async function loadCard() {
-        try {
-          signal = abortController.signal;
-          const response = await readCard(cardId, signal);
-          setCard(response);
-        } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
-            throw error;
-          }
-        }
-      }
-      loadCard();
-      return () => abortController.abort;
-    }
-  }, [cardId]);
-
   const deleteDeck = () => {
     console.log("delete Deck");
   };
 
   const editCard = (id) => {
-    console.log("idchange");
-    setCardId(id);
     history.push(`${url}/cards/${id}/edit`);
   };
 
@@ -144,7 +118,7 @@ function Deck() {
         <AddCard deckId={deckId} />
       </Route>
       <Route path={`${url}/cards/:cardId/edit`}>
-        <EditCard currentCard={card} deck={deckId} />
+        <EditCard deckId={deckId} />
       </Route>
       <Route>
         <DeckDisplay />

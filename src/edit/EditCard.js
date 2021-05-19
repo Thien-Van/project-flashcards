@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { updateCard } from "../utils/api";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { updateCard, readCard } from "../utils/api";
 
-function EditCard({ currentCard = {}, deckId }) {
+function EditCard({ deckId }) {
+  const { cardId } = useParams();
+  console.log(cardId);
   const history = useHistory();
   const [card, setCard] = useState({});
   const [updatedCard, setUpdatedCard] = useState({});
@@ -12,14 +14,38 @@ function EditCard({ currentCard = {}, deckId }) {
   const handleBackChange = (event) => setCardBack(event.target.value);
 
   useEffect(() => {
+    if (cardId != null) {
+      const abortController = new AbortController();
+      let signal = null;
+      loadCard();
+      async function loadCard() {
+        try {
+          signal = abortController.signal;
+          const response = await readCard(cardId, signal);
+          setCard(response);
+        } catch (error) {
+          if (error.name === "AbortError") {
+            console.log("Aborted");
+          } else {
+            throw error;
+          }
+        }
+      }
+      loadCard();
+      return () => abortController.abort;
+    }
+  }, [cardId]);
+
+  useEffect(() => {
     if (Object.keys(updatedCard).length > 0) {
       const abortController = new AbortController();
       let signal = null;
       async function loadNewCard() {
         try {
           signal = abortController.signal;
-          await updateCard(updatedCard, signal);
+          const response = await updateCard(updatedCard, signal);
           history.push(`/decks/${deckId}`);
+          console.log(response);
         } catch (error) {
           if (error.name === "AbortError") {
             console.log("Aborted");
@@ -32,12 +58,6 @@ function EditCard({ currentCard = {}, deckId }) {
       return () => abortController.abort;
     }
   }, [updatedCard]);
-
-  useEffect(() => {
-    if (Object.keys(currentCard).length > 0) {
-      setCard(currentCard);
-    }
-  }, [currentCard]);
 
   useEffect(() => {
     if (Object.keys(card).length > 0) {
@@ -54,8 +74,6 @@ function EditCard({ currentCard = {}, deckId }) {
       id: card.id,
     });
   };
-  //   console.log("currentcard", currentCard);
-  //   console.log("card", card);
 
   return (
     <div>
