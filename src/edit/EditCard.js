@@ -44,6 +44,8 @@ function EditCard({ deckId }) {
         try {
           signal = abortController.signal;
           const response = await updateCard(updatedCard, signal);
+          console.log("47", response);
+
           history.push(`/decks/${deckId}`);
           console.log(response);
         } catch (error) {
@@ -57,7 +59,7 @@ function EditCard({ deckId }) {
       loadNewCard();
       return () => abortController.abort;
     }
-  }, [updatedCard]);
+  }, [updatedCard, deckId, history]);
 
   useEffect(() => {
     if (Object.keys(card).length > 0) {
@@ -72,6 +74,7 @@ function EditCard({ deckId }) {
       front: cardFront,
       back: cardBack,
       id: card.id,
+      deckId: card.deckId,
     });
   };
 

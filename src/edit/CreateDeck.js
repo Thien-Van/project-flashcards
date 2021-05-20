@@ -31,7 +31,7 @@ function CreateDeck() {
       loadNewDeck();
       return () => abortController.abort;
     }
-  }, [newDeck]);
+  }, [newDeck, history]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

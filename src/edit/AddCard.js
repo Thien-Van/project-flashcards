@@ -30,7 +30,7 @@ function AddCard({ deckId }) {
       loadNewCard();
       return () => abortController.abort;
     }
-  }, [newCard]);
+  }, [newCard, deckId, history]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -40,7 +40,7 @@ function StudyDeck({ deck }) {
       setContent(cards[cardNum].front);
       setHidden(true);
     }
-  }, [cardNum]);
+  }, [cardNum, cards]);
 
   return (
     <div>

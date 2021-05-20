@@ -32,7 +32,7 @@ function EditDeck({ deck }) {
       saveDeck();
       return () => abortController.abort;
     }
-  }, [updatedDeck]);
+  }, [updatedDeck, history, deck]);
 
   useEffect(() => {
     if (Object.keys(deck).length > 0) {

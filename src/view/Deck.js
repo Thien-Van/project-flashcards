@@ -14,14 +14,13 @@ import StudyDeck from "../study/StudyDeck";
 import AddCard from "../edit/AddCard";
 import CardOverview from "./CardOverview";
 import EditCard from "../edit/EditCard";
-import { readDeck, readCard } from "../utils/api";
+import { readDeck } from "../utils/api";
 
 function Deck() {
   let location = useLocation();
   const history = useHistory();
   const { url } = useRouteMatch();
   const { deckId } = useParams();
-  console.log(deckId);
 
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({});
@@ -46,7 +45,7 @@ function Deck() {
     }
     loadDeck();
     return () => abortController.abort;
-  }, [location]);
+  }, [location, deckId]);
 
   const deleteDeck = () => {
     console.log("delete Deck");
@@ -55,7 +54,7 @@ function Deck() {
   const editCard = (id) => {
     history.push(`${url}/cards/${id}/edit`);
   };
-
+  console.log(cards);
   const cardList = cards.map((card) => (
     <CardOverview
       editCard={editCard}

@@ -8,7 +8,6 @@ function Home() {
   let location = useLocation();
   const [decks, setDecks] = useState([]);
   useEffect(() => {
-    console.log("homechange");
     const abortController = new AbortController();
     let signal = null;
     loadDecks();
