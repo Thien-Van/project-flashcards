@@ -1,10 +1,11 @@
 import React from "react";
+import { Route, Switch } from "react-router";
+
 import Header from "./Header";
 import NotFound from "./NotFound";
-import AllDecks from "../decks/AllDecks";
-import Deck from "../decks/Deck";
-import { Route, Switch } from "react-router";
-import CreateDeck from "../decks/CreateDeck";
+import Home from "../view/Home";
+import CreateDeck from "../edit/CreateDeck";
+import Deck from "../view/Deck";
 
 function Layout() {
   return (
@@ -14,7 +15,10 @@ function Layout() {
         {/* TODO: Implement the screen starting here */}
         <Switch>
           <Route exact={true} path="/">
-            <AllDecks />
+            <Home />
+          </Route>
+          <Route path="/decks/new">
+            <CreateDeck />
           </Route>
           <Route path="/decks/:deckId">
             <Deck />
