@@ -48,7 +48,7 @@ function AddCard({ deckId }) {
             <Link to="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to={`#`}>Deck</Link>
+            <Link to={`/decks/${deckId}`}>Deck</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Edit Card X

@@ -7,12 +7,14 @@ function StudyDeck({ deck }) {
   const [cardNum, setCardNum] = useState(0);
   const [content, setContent] = useState("");
   const [hidden, setHidden] = useState(true);
+  //   const [tooShort, setTooShort] = useState(false);
 
   useEffect(() => {
     if (Object.keys(deck).length > 0) {
       setCards(deck.cards);
       setContent(deck.cards[0].front);
       setCardNum(0);
+      //   if (cards.length < 3) setTooShort(true);
     }
   }, [deck]);
 
@@ -41,6 +43,22 @@ function StudyDeck({ deck }) {
       setHidden(true);
     }
   }, [cardNum, cards]);
+
+  if (Object.keys(deck).length > 0 && cards.length < 3) {
+    return (
+      <div>
+        <h1>Study: {deck.title}</h1>
+        <h3>Not enough cards.</h3>
+        <p>
+          You need at least 3 cars to study. There are {cards.length} cards in
+          the deck.
+        </p>
+        <Link className="btn btn-primary" to={`/decks/${deck.id}/card/new`}>
+          Add card
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -20,7 +20,7 @@ function CardOverview({ front, back, id, editCard }) {
   };
 
   return (
-    <div className="card">
+    <div className="card m-2">
       <div className="row">
         <div className="col-sm m-1">
           <p>{front}</p>

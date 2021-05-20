@@ -14,7 +14,7 @@ import StudyDeck from "../study/StudyDeck";
 import AddCard from "../edit/AddCard";
 import CardOverview from "./CardOverview";
 import EditCard from "../edit/EditCard";
-import { readDeck } from "../utils/api";
+import { readDeck, deleteDeck } from "../utils/api";
 
 function Deck() {
   let location = useLocation();
@@ -47,14 +47,19 @@ function Deck() {
     return () => abortController.abort;
   }, [location, deckId]);
 
-  const deleteDeck = () => {
-    console.log("delete Deck");
+  const handleDelete = () => {
+    const confirm = window.confirm(
+      "Delete this deck? You will not be able to recover it"
+    );
+    if (confirm) {
+      deleteDeck(deckId);
+      window.open(`/`, "Deck");
+    }
   };
 
   const editCard = (id) => {
     history.push(`${url}/cards/${id}/edit`);
   };
-  console.log(cards);
   const cardList = cards.map((card) => (
     <CardOverview
       editCard={editCard}
@@ -93,7 +98,7 @@ function Deck() {
           >
             Add Cards
           </Link>
-          <button className="btn btn-danger m-1" onClick={deleteDeck}>
+          <button className="btn btn-danger m-1" onClick={handleDelete}>
             Delete
           </button>
         </div>
