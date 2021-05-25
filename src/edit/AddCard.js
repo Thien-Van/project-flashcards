@@ -32,6 +32,10 @@ function AddCard({ deckId }) {
     }
   }, [newCard, deckId, history]);
 
+  // useEffect(() => {
+  //   console.log(document.body.innerText("Add Card"));
+  // }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setNewCard({

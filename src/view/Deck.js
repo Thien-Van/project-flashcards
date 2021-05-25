@@ -96,7 +96,7 @@ function Deck() {
             className="btn btn-primary m-1"
             to={`/decks/${deckId}/card/new`}
           >
-            Add Cards
+            Add Card
           </Link>
           <button className="btn btn-danger m-1" onClick={handleDelete}>
             Delete
