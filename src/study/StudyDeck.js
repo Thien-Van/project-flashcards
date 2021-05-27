@@ -68,7 +68,7 @@ function StudyDeck({ deck }) {
             <Link to="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to={`/decks/${deck.id}`}>{deck.name}</Link>
+            <Link to={`/decks/${deck.id}`}>Deck {deck.name}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Study
@@ -83,6 +83,8 @@ function StudyDeck({ deck }) {
         content={content}
         hidden={hidden}
         nextCard={nextCard}
+        totalCards={cards.length}
+        cardNum={cardNum + 1}
       />
     </div>
   );

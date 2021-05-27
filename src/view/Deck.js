@@ -94,7 +94,7 @@ function Deck() {
           </Link>
           <Link
             className="btn btn-primary m-1"
-            to={`/decks/${deckId}/card/new`}
+            to={`/decks/${deckId}/cards/new`}
           >
             Add Card
           </Link>
@@ -110,6 +110,7 @@ function Deck() {
     );
   }
 
+  console.log(deck.name);
   return (
     <Switch>
       <Route path={`${url}/study`}>
@@ -118,8 +119,8 @@ function Deck() {
       <Route path={`${url}/edit`}>
         <EditDeck deck={deck} />
       </Route>
-      <Route path={`${url}/card/new`}>
-        <AddCard deckId={deckId} />
+      <Route path={`${url}/cards/new`}>
+        <AddCard deckId={deckId} deckName={deck.name} />
       </Route>
       <Route path={`${url}/cards/:cardId/edit`}>
         <EditCard deckId={deckId} />

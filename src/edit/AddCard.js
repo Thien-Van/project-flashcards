@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createCard } from "../utils/api";
 
-function AddCard({ deckId }) {
+function AddCard({ deckId, deckName }) {
   const history = useHistory();
   const [newCard, setNewCard] = useState({});
   const [cardFront, setCardFront] = useState("");
@@ -60,7 +60,7 @@ function AddCard({ deckId }) {
         </ol>
       </nav>
       <div>
-        <h1>Add Card</h1>
+        <h1>{deckName}: Add Card</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="cardFront" className="mt-3">
