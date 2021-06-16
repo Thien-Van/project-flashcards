@@ -18,8 +18,6 @@ function Home() {
         setDecks(response);
       } catch (error) {
         if (error.name === "AbortError") {
-          console.log("Aborted");
-        } else {
           throw error;
         }
       }

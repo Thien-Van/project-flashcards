@@ -20,9 +20,7 @@ function AddCard({ deckId, deckName }) {
           await createCard(deckId, newCard, signal);
           history.push(`/decks/${deckId}`);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
+          if (error.name !== "AbortError") {
             throw error;
           }
         }

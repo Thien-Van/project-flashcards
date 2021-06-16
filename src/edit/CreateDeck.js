@@ -21,9 +21,7 @@ function CreateDeck() {
           const response = await createDeck(newDeck, signal);
           history.push(`/decks/${response.id}`);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
+          if (error.name !== "AbortError") {
             throw error;
           }
         }

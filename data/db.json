@@ -71,7 +71,7 @@
     },
     {
       "front": "Another Card from ya boi",
-      "back": "Boiiiiiiyoooo",
+      "back": "Boiiiiiiy",
       "id": 15,
       "deckId": 3
     },
@@ -80,6 +80,12 @@
       "back": "itsa me",
       "deckId": 3,
       "id": 16
+    },
+    {
+      "front": "asda",
+      "back": "ffeef",
+      "deckId": 3,
+      "id": 17
     }
   ]
 }

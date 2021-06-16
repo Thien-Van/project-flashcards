@@ -36,9 +36,7 @@ function Deck() {
         setDeck(response);
         setCards(response.cards);
       } catch (error) {
-        if (error.name === "AbortError") {
-          console.log("Aborted");
-        } else {
+        if (error.name !== "AbortError") {
           throw error;
         }
       }

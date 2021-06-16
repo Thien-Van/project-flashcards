@@ -24,9 +24,7 @@ function EditCard({ deckId }) {
           const response = await readCard(cardId, signal);
           setCard(response);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
+          if (error.name !== "AbortError") {
             throw error;
           }
         }
@@ -43,15 +41,10 @@ function EditCard({ deckId }) {
       async function loadNewCard() {
         try {
           signal = abortController.signal;
-          const response = await updateCard(updatedCard, signal);
-          console.log("47", response);
-
+          await updateCard(updatedCard, signal);
           history.push(`/decks/${deckId}`);
-          console.log(response);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
+          if (error.name !== "AbortError") {
             throw error;
           }
         }

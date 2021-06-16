@@ -22,9 +22,7 @@ function EditDeck({ deck }) {
           await updateDeck(updatedDeck, signal);
           history.push(`/decks/${deck.id}`);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log("Aborted");
-          } else {
+          if (error.name !== "AbortError") {
             throw error;
           }
         }
