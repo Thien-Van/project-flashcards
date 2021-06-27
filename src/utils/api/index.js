@@ -2,7 +2,9 @@
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL =
+  process.env.API_BASE_URL ||
+  "https://project-flashcards-me2hh8130-thien-van.vercel.app/";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -54,7 +56,6 @@ async function fetchJson(url, options, onCancel) {
     }
 
     return await response.json();
-
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error.stack);
